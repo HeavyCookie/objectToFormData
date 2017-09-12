@@ -1,0 +1,20 @@
+{
+  "name": "objectToFormData",
+  "version": "0.1.0",
+  "description": "Convert objects (from form by example) to FormData",
+  "main": "objectToFormData.js",
+  "repository": "http://github.com/HeavyCookie/objectToFormData.git",
+  "author": "Thibault Lacroux <thibault.lacroux@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "^21.0.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "flow-bin": "^0.54.1",
+    "jest": "^21.0.2"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0"
+  }
+}
