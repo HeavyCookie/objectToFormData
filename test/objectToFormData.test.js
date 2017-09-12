@@ -1,5 +1,5 @@
 // @flow
-import objectToFormData, { formatPath } from './objectToFormData'
+import objectToFormData, { formatPath } from '../src/objectToFormData'
 
 describe('#formatPath', () => {
   test('with only 1 element', () => {
