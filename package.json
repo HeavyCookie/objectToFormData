@@ -10,6 +10,7 @@
   "author": "Thibault Lacroux <thibault.lacroux@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "prepublish": "npm run babel-prepublish && npm run flow-prepublish",
     "babel-prepublish": "babel src -d lib",
     "flow-prepublish": "flow-copy-source src lib"
