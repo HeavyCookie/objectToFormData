@@ -1,6 +1,6 @@
 {
   "name": "objecttoformdata",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert objects (from form by example) to FormData",
   "main": "lib/objectToFormData.js",
   "files": [
@@ -15,7 +15,7 @@
     "babel-prepublish": "babel src -d lib",
     "flow-prepublish": "flow-copy-source src lib"
   },
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-jest": "^21.0.2",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
