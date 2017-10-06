@@ -36,4 +36,9 @@ describe('#convert', () => {
 
     expect(field).toBeInstanceOf(Blob)
   })
+
+  test('object with a boolean', () => {
+    const object = { test: true }
+    expect(objectToFormData(object).get('test')).toEqual('true')
+  })
 })

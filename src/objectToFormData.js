@@ -30,6 +30,8 @@ const convert = (
     } else if (typeof value === 'string') {
       form.append(formatPath(fullPath), value)
       // Object
+    } else if (typeof value === 'boolean') {
+      form.append(formatPath(fullPath), value)
     } else if (value instanceof Object) {
       convert(value, fullPath, form)
     }
