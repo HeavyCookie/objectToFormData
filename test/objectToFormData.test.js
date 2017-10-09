@@ -41,4 +41,19 @@ describe('#convert', () => {
     const object = { test: true }
     expect(objectToFormData(object).get('test')).toEqual('true')
   })
+
+  test('object with array of number return string array', () => {
+    const object = { test: [1, 2] }
+    const result = objectToFormData(object)
+
+    expect(result.getAll('test[]')).toEqual([1, 2].map(i => i.toString()))
+    expect(result.get('test[]')).toEqual("1")
+  })
+
+  test('object with an array of object', () => {
+    const object = { test: [{key1: 'val1'}, {key2: 'val2'}]}
+    const result = objectToFormData(object)
+
+    expect(result.get('test[][key1]')).toEqual('val1')
+  })
 })

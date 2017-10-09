@@ -6,36 +6,52 @@ export const formatPath = ([base, ...rest]: Array<string>): string => {
   return base
 }
 
+type SimpleValues = File | Blob | string | boolean | number
+type ArrayValues = Array<SimpleValues | ArrayValues | ObjectValues>
+type ObjectValues = {[k: string]: SimpleValues | ArrayValues | ObjectValues}
+
+const isValidValue = (value: any): boolean =>
+  ['string', 'boolean', 'number'].includes(typeof value)
+    || value instanceof Array
+    || value instanceof Object
+    || value instanceof Blob
+    || value instanceof File
+
 const convert = (
-  object: Object,
-  previousPath: Array<string> = [],
+  value: ObjectValues | ArrayValues | SimpleValues,
+  path: Array<string> = [],
   formData?: FormData
 ): FormData => {
   const form = formData || new FormData()
-
-  Object.keys(object).forEach((key) => {
-    const value = object[key]
-    const fullPath = [...previousPath, key]
-
-    // Array
-    if (value instanceof Array) {
-      const p = `${formatPath(fullPath)}[]`
-      value.forEach((v) => {
-        form.append(p, v)
-      })
-      // Blob/File
-    } else if (value instanceof Blob || value instanceof File) {
-      form.append(formatPath(fullPath), value)
-      // String
-    } else if (typeof value === 'string') {
-      form.append(formatPath(fullPath), value)
-      // Object
-    } else if (typeof value === 'boolean') {
-      form.append(formatPath(fullPath), value)
-    } else if (value instanceof Object) {
-      convert(value, fullPath, form)
-    }
-  })
+  // Array
+  if (value instanceof Array) {
+    // const p = `${formatPath(fullPath)}[]`
+    value.forEach((v) => {
+      // form.append(p, v)
+      convert(v, [...path, ''], form)
+    })
+    // Blob/File
+  } else if (value instanceof Blob || value instanceof File) {
+    form.append(formatPath(path), value)
+    // String
+  } else if (typeof value === 'string') {
+    form.append(formatPath(path), value)
+    // Object
+  } else if (typeof value === 'boolean' || typeof value === 'number') {
+    form.append(formatPath(path), value.toString())
+  } else if (value instanceof Object) {
+    // Object.keys(value).forEach((key) => {
+    //   const subValue = value[key]
+    //   const futurePath = [...path, key]
+    //     convert(subValue, path, form)
+    // })
+    Object.entries(value).forEach(([k, v]) => {
+      if(isValidValue(v)) {
+        // $FlowFixMe
+        convert(v, [...path, k], form)
+      }
+    })
+  }
 
   return form
 }
