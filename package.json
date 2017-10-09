@@ -1,6 +1,6 @@
 {
   "name": "objecttoformdata",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Convert objects (from form by example) to FormData",
   "main": "lib/objectToFormData.js",
   "files": [

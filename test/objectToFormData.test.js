@@ -54,6 +54,6 @@ describe('#convert', () => {
     const object = { test: [{key1: 'val1'}, {key2: 'val2'}]}
     const result = objectToFormData(object)
 
-    expect(result.get('test[][key1]')).toEqual('val1')
+    expect(result.get('test[0][key1]')).toEqual('val1')
   })
 })

@@ -25,10 +25,12 @@ const convert = (
   const form = formData || new FormData()
   // Array
   if (value instanceof Array) {
-    // const p = `${formatPath(fullPath)}[]`
-    value.forEach((v) => {
-      // form.append(p, v)
-      convert(v, [...path, ''], form)
+    value.forEach((v, i) => {
+      if (v instanceof Object && !(v instanceof Blob || v instanceof File)) {
+        convert(v, [...path, i.toString()], form)
+      } else {
+        convert(v, [...path, ''], form)
+      }
     })
     // Blob/File
   } else if (value instanceof Blob || value instanceof File) {
