@@ -27,8 +27,10 @@ const convert = (
   if (value instanceof Array) {
     value.forEach((v, i) => {
       if (v instanceof Object && !(v instanceof Blob || v instanceof File)) {
+        // $FlowFixMe
         convert(v, [...path, i.toString()], form)
       } else {
+        // $FlowFixMe
         convert(v, [...path, ''], form)
       }
     })
@@ -42,11 +44,6 @@ const convert = (
   } else if (typeof value === 'boolean' || typeof value === 'number') {
     form.append(formatPath(path), value.toString())
   } else if (value instanceof Object) {
-    // Object.keys(value).forEach((key) => {
-    //   const subValue = value[key]
-    //   const futurePath = [...path, key]
-    //     convert(subValue, path, form)
-    // })
     Object.entries(value).forEach(([k, v]) => {
       if(isValidValue(v)) {
         // $FlowFixMe
