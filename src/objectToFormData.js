@@ -6,10 +6,6 @@ export const formatPath = ([base, ...rest]: Array<string>): string => {
   return base
 }
 
-type SimpleValues = File | Blob | string | boolean | number
-type ArrayValues = Array<SimpleValues | ArrayValues | ObjectValues>
-type ObjectValues = {[k: string]: SimpleValues | ArrayValues | ObjectValues}
-
 const isValidValue = (value: any): boolean =>
   ['string', 'boolean', 'number'].includes(typeof value)
     || value instanceof Array
@@ -18,7 +14,7 @@ const isValidValue = (value: any): boolean =>
     || value instanceof File
 
 const convert = (
-  value: ObjectValues | ArrayValues | SimpleValues,
+  value: any,
   path: Array<string> = [],
   formData?: FormData
 ): FormData => {
@@ -27,10 +23,8 @@ const convert = (
   if (value instanceof Array) {
     value.forEach((v, i) => {
       if (v instanceof Object && !(v instanceof Blob || v instanceof File)) {
-        // $FlowFixMe
         convert(v, [...path, i.toString()], form)
       } else {
-        // $FlowFixMe
         convert(v, [...path, ''], form)
       }
     })
@@ -46,7 +40,6 @@ const convert = (
   } else if (value instanceof Object) {
     Object.entries(value).forEach(([k, v]) => {
       if(isValidValue(v)) {
-        // $FlowFixMe
         convert(v, [...path, k], form)
       }
     })
